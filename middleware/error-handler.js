@@ -17,11 +17,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   // Handling mongoose error for unique email
   if (err.code === 11000) {
     defaultError.status = StatusCodes.BAD_REQUEST;
-    defaultError.msg = `${Object.keys(
-      err.keyValue
-    )} field has to be unique. Please try with another ${Object.keys(
-      err.keyValue
-    )}`;
+    defaultError.msg = `${Object.keys(err.keyValue)} already in use`;
   }
 
   res.status(defaultError.status).json({ msg: defaultError.msg });
