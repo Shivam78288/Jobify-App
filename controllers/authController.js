@@ -45,8 +45,26 @@ const login = async (req, res) => {
   user.password = undefined;
   res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
-const update = (req, res) => {
-  res.send("update");
+const update = async (req, res) => {
+  const { email, name, lastName, location } = req.body;
+
+  if (!email || !name || !lastName || !location) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  // We are not using find one and update because it will not trigger the pre save hook
+  // Defined in the model
+  const user = await User.findOne({ _id: req.user.userId });
+  console.log(user);
+  user.email = email;
+  user.name = name;
+  user.lastName = lastName;
+  user.location = location;
+
+  await user.save();
+
+  const token = user.createJWT();
+  res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
 export { register, login, update };

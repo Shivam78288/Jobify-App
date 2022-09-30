@@ -36,12 +36,14 @@ const UserSchema = new mongoose.Schema({
   location: {
     type: String,
     trim: true,
-    maxlength: [20, "Location should be of length less than or equal to 20"],
     default: "my city",
   },
 });
 
 UserSchema.pre("save", async function (next) {
+  // If we are not modifying the password, we won't touch this function
+  if (!this.isModified("password")) return;
+
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
