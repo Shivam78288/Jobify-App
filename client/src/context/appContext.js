@@ -238,7 +238,6 @@ const AppProvider = ({ children }) => {
         payload: { jobs, totalJobs, numOfPages },
       });
     } catch (err) {
-      console.log(err.response);
       logoutUser();
     }
     clearAlert();
@@ -294,7 +293,6 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (err) {
-      console.log(err);
       logoutUser();
     }
     clearAlert();

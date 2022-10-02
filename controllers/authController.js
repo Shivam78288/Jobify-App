@@ -55,7 +55,6 @@ const update = async (req, res) => {
   // We are not using find one and update because it will not trigger the pre save hook
   // Defined in the model
   const user = await User.findOne({ _id: req.user.userId });
-  console.log(user);
   user.email = email;
   user.name = name;
   user.lastName = lastName;

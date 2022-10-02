@@ -22,6 +22,7 @@ const JobsConatainer = () => {
 
   useEffect(() => {
     getJobs();
+    // eslint-disable-next-line
   }, [sort, searchCompany, searchPosition, searchType, searchStatus, page]);
 
   if (isLoading) {
