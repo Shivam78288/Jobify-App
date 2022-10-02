@@ -19,7 +19,7 @@ const SearchContainer = () => {
   } = useAppContext();
 
   const handleSearch = (e) => {
-    if (isLoading) return;
+    // if (isLoading) return;
     handleInputChange({ key: e.target.name, value: e.target.value });
   };
 

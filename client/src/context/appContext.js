@@ -27,6 +27,7 @@ import {
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
+  CHANGE_PAGE,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -210,10 +211,16 @@ const AppProvider = ({ children }) => {
   };
 
   const getJobs = async () => {
-    const { searchCompany, searchPosition, searchType, searchStatus, sort } =
-      state;
+    const {
+      searchCompany,
+      searchPosition,
+      searchType,
+      searchStatus,
+      sort,
+      page,
+    } = state;
     let url = "/jobs";
-    url = `${url}?status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
+    url = `${url}?page=${page}&status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
     if (searchCompany) {
       url = `${url}&searchCompany=${searchCompany}`;
     }
@@ -293,6 +300,10 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const changePage = ({ page }) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
+
   const clearFilters = () => {
     dispatch({ type: CLEAR_FILTERS });
   };
@@ -315,6 +326,7 @@ const AppProvider = ({ children }) => {
         editJob,
         showStats,
         clearFilters,
+        changePage,
       }}
     >
       {children}
